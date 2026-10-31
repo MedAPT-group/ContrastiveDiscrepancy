@@ -1,0 +1,20 @@
+# GaussianDIR: the deformation field is blended from anisotropic Gaussian
+# primitives scattered inside the ROI. Complexity is set by `num_gaussians`.
+type: GaussianWarp
+
+num_gaussians: 6400     # <- complexity hyperparameter selected by CD
+K: 20                   # primitives blended per query point
+sparsification: 8       # densification cap = |ROI| / sparsification^3
+with_quaternion: false  # per-primitive rotation of the local displacement
+
+anisotropy:
+  scaling: false        # per-axis extent instead of a single radius
+  quaternion: false     # orientation of the anisotropic kernel
+
+densify:
+  enabled: false        # keep false to hold capacity fixed per configuration
+  from_iter: 300
+  until_ratio: 0.6
+  interval_ratio: 0.05
+  max_contribution: 0.002
+  min_contribution: 1.0e-7
